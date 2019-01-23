@@ -20,17 +20,17 @@ module.exports = function (app) {
   
     .get(function (req, res){
       var project = req.params.project;
-      
+      console.log(project)
     })
     
     .post(function (req, res){
       var project = req.params.project;
-      
+      console.log(project)
     })
     
     .put(function (req, res){
       var project = req.params.project;
-      
+      console.log(project)
     })
     
     .delete(function (req, res){
