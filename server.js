@@ -8,8 +8,8 @@ var cors        = require('cors');
 var apiRoutes         = require('./routes/api.js');
 var fccTestingRoutes  = require('./routes/fcctesting.js');
 var runner            = require('./test-runner');
-var helmet            = require('helmet'),
-    mongoose          = require('mongoose');
+var helmet            = require('helmet');
+    //mongoose          = require('mongoose');
 
 var app = express();
 
@@ -17,11 +17,11 @@ app.use('/public', express.static(process.cwd() + '/public'));
 
 app.use(cors({origin: '*'})); //For FCC testing purposes only
 
-require('dotenv').load();
+//require('dotenv').load();
 app.use(helmet());
 
-mongoose.connect(process.env.MONGO_URI, {useNewUrlParser: true});
-mongoose.Promise = global.Promise;
+// mongoose.connect(process.env.MONGO_URI, {useNewUrlParser: true});
+// mongoose.Promise = global.Promise;
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
