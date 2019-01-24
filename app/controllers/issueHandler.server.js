@@ -6,11 +6,12 @@ function IssueHandler () {
   
   this.viewIssue = (req, res) => {
     console.log(req.query, req.params)
+    
     Issues
-    .find({})
+    .find({ _id: {$gte: 1000}}).sort({_id: 1})
     .exec( (err, result) => {
           if(err) throw err;
-          console.log('results',result,  result[0]._id)
+          console.log('results', result)
           });
     
   };
@@ -18,7 +19,7 @@ function IssueHandler () {
 	this.submitIssue = function (req, res) {
     console.log(req.body)
 		Issues
-			.find({_id: /\d/ }).sort({_id: 1}) //findOne
+			.find({_id: {$gte: 1000} }).sort({_id: 1}) //findOne
 			.exec(function (err, result) {
 				if (err) { throw err; }
        console.log(result)
