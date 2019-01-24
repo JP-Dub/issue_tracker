@@ -46,15 +46,22 @@ function IssueHandler () {
           if(err) return console.error(err);
           res.json(success)
         });
-				//res.json(submit);
+				
 			});
 	};
 
 	this.updateIssue = function (req, res) {
     console.log(req.body)
 		Issues
-      .find({ _id: req.body._id})
-			.findOneAndUpdate({ _id: req.body._id}, {open: false, updated_on: new Date(Date.now()).toString()}, {upsert: true})
+      //.find({ _id: req.body._id})
+			.findOneAndUpdate({ 
+        _id: req.body._id
+        },{
+        open: false, 
+        updated_on: new Date(Date.now()).toString()
+        },{
+        upsert: true
+      })
 			.exec(function (err, result) {
 					if (err) { throw err; }
             console.log(result)
