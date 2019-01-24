@@ -25,7 +25,7 @@ function IssueHandler () {
         console.log(result)
         let submit = new Issues(),
             project = req.body,
-            id      = result[0]._id++;
+            id      = result[0]._id + 1;
         
         submit.issue_title = project.issue_title;
         submit.issue_text  = project.issue_text;
@@ -36,11 +36,11 @@ function IssueHandler () {
         submit.created_on  = new Date(Date.now()).toString();
         submit.open        = true;
 
-        // submit.save( (err, success) => {
-        //   if(err) return console.error(err);
-        //   res.json(success)
-        // });
-				res.json(submit);
+        submit.save( (err, success) => {
+          if(err) return console.error(err);
+          res.json(success)
+        });
+				//res.json(submit);
 			});
 	};
 
