@@ -54,9 +54,10 @@ function IssueHandler () {
     console.log(req.body)
 		Issues
       //.find({ _id: req.body._id})
-			.findOneAndUpdate({ 
+			.findByIdAndUpdate({ 
         _id: req.body._id
         },{
+        issue_title: req.body.issue_title,
         open: false, 
         updated_on: new Date(Date.now()).toString()
         },{
@@ -71,13 +72,11 @@ function IssueHandler () {
 	};
 
 	this.deleteIssue = function (req, res) {
-    console.log('delete', req.query, req.params.project, req.body)
 		Issues
-      
 			.findOneAndDelete({_id: req.body._id})
 			.exec(function (err, result) {
-					if (err) { throw err; }
-          console.log(result)
+					if (err) throw err; 
+
 					res.json(result);
 				}
 			);
