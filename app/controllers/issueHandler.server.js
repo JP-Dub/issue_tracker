@@ -54,7 +54,7 @@ function IssueHandler () {
     console.log(req.body)
 		Issues
       .find({ _id: req.body._id})
-			.findOneAndUpdate({open: false, updated_on: new Date(Date.now()).toString();})
+			.findOneAndUpdate({ _id: req.body._id}, {open: false, updated_on: new Date(Date.now()).toString()}, {upsert: true})
 			.exec(function (err, result) {
 					if (err) { throw err; }
             console.log(result)
@@ -64,12 +64,14 @@ function IssueHandler () {
 	};
 
 	this.deleteIssue = function (req, res) {
+    console.log('delete', req.query, req.params.project, req.body)
 		Issues
-			.findOneAndUpdate({ 'github.id': req.user.github.id }, { 'nbrClicks.clicks': 0 })
+      .find({})
+			//.findOneAndDelete({_id: req.body._id})
 			.exec(function (err, result) {
 					if (err) { throw err; }
-
-					res.json(result.nbrClicks);
+          console.log(result)
+					res.json(result);
 				}
 			);
 	};
