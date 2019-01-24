@@ -26,7 +26,9 @@ module.exports = function (app) {
     .get(issueHandler.viewIssue)
     
     
-    .post(issueHandler.submitIssue)
+    .post((req, res) => {
+      issueHandler.submitIssue(data =>  res.json(data));
+    })
     
     
     .put(issueHandler.updateIssue)
