@@ -5,6 +5,7 @@ var Issues = require('../model/issues.js');
 function IssueHandler () {
   
   this.viewIssue = (req, res) => {
+    console.log(req.query, req.params)
     Issues
     .find({})
     .exec( (err, result) => {
@@ -17,10 +18,10 @@ function IssueHandler () {
 	this.submitIssue = function (req, res) {
     console.log(req.body)
 		Issues
-			.findOne({}, { '_id': true })
+			.findOne({_id: /\d/})
 			.exec(function (err, result) {
 				if (err) { throw err; }
-       //console.log(result)
+       console.log(result)
         let submit = new Issues(),
             project = req.body,
             id      = result ? result._id++ : 1001;

@@ -23,9 +23,8 @@ module.exports = function (app) {
 
   app.route('/api/issues/:project')
   
-    .get((req, res) => {
-      var project = req.params.project;
-    })
+    .get(issueHandler.viewIssue)
+    
     
     .post(issueHandler.submitIssue)
     
