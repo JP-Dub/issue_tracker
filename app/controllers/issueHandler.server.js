@@ -61,7 +61,7 @@ function IssueHandler () {
 			.findOneAndUpdate({ 
         _id: project._id
         },{
-         issue_title: project.issue_title,
+         issue_title: project.issue_title || null,
         // issue_text: project.issue_text,
         // created_by: project.created_by,
         // assigned_to: project.assigned_to,
