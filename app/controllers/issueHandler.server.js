@@ -38,9 +38,9 @@ function IssueHandler () {
       submit.save( (err, success) => {
         if(err) return console.error(err);
         console.log(success)
-        res.json(success)
+        //res.json(success)
       });
-				//res.json();
+				res.json(submit);
 			});
 	};
 
