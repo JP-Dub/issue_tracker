@@ -20,12 +20,12 @@ module.exports = function (app) {
   
     .get(function (req, res){
       var project = req.params.project;
-      console.log('project', project)
+     
     })
     
     .post(function (req, res){
       var project = req.params.project;
-      console.log(project)
+      console.log('post', req.body)
     })
     
     .put(function (req, res){
