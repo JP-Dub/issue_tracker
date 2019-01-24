@@ -6,6 +6,9 @@
 *
 */
 
+var path = process.cwd();
+var ClickHandler = require(path + '/app/controllers/clickHandler.server.js');
+
 'use strict';
 
 var expect = require('chai').expect;
@@ -30,12 +33,12 @@ module.exports = function (app) {
     
     .put(function (req, res){
       var project = req.params.project;
-      console.log(project)
+      console.log('put', req.body)
     })
     
     .delete(function (req, res){
       var project = req.params.project;
-      
+      console.log('delete', req.body)
     });
     
 };
