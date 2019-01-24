@@ -66,8 +66,8 @@ function IssueHandler () {
 	this.deleteIssue = function (req, res) {
     console.log('delete', req.query, req.params.project, req.body)
 		Issues
-      .find({})
-			//.findOneAndDelete({_id: req.body._id})
+      
+			.findOneAndDelete({_id: req.body._id})
 			.exec(function (err, result) {
 					if (err) { throw err; }
           console.log(result)
