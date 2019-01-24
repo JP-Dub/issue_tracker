@@ -1,16 +1,21 @@
 'use strict';
 
-var Users = require('../model/issues.js');
+var Issues = require('../model/issues.js');
 
 function IssueHandler () {
   
   this.viewIssue = (req, res) => {
     Issues
-      .find(
+    .find({})
+    .exec( (err, result) => {
+          if(err) throw err;
+          console.log(result)
+          });
     
   };
 
 	this.submitIssue = function (req, res) {
+    
 		Issues
 			.findOne({ 'github.id': req.user.github.id }, { '_id': false })
 			.exec(function (err, result) {
