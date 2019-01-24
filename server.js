@@ -26,7 +26,7 @@ mongoose.Promise = global.Promise;
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
-
+app.set("json spaces", 2);
 
 //Sample front-end
 app.route('/:project/')

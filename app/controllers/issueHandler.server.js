@@ -5,21 +5,21 @@ var Issues = require('../model/issues.js');
 function IssueHandler () {
   
   this.viewIssue = (req, res) => {
-    console.log(req.query, req.params)
-    
     Issues
-    .find({ _id: {$gte: 1000}}).sort({_id: 1})
+    .find({ _id: { $gte: 1000 } })
+    .sort({_id: 1})
     .exec( (err, result) => {
           if(err) throw err;
-          console.log('results', result)
-          });
-    
+          console.log('results', req.params)
+          res.json(result)
+         });
   };
 
 	this.submitIssue = function (req, res) {
-    console.log(req.body)
+
 		Issues
-			.find({_id: {$gte: 1000} }).sort({_id: -1})
+			.find({_id: { $gte: 1000 } })
+      .sort({_id: -1})
 			.exec(function (err, result) {
 				if (err) { throw err; }
    
