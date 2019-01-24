@@ -10,7 +10,7 @@ function IssueHandler () {
     .find({})
     .exec( (err, result) => {
           if(err) throw err;
-          console.log(result)
+          console.log('results', result)
           });
     
   };
@@ -18,7 +18,7 @@ function IssueHandler () {
 	this.submitIssue = function (req, res) {
     console.log(req.body)
 		Issues
-			.findOne({_id: /\d/})
+			.find({})//findOne
 			.exec(function (err, result) {
 				if (err) { throw err; }
        console.log(result)
