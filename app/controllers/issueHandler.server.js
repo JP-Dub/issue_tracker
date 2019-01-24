@@ -19,13 +19,13 @@ function IssueHandler () {
 	this.submitIssue = function (req, res) {
     console.log(req.body)
 		Issues
-			.find({_id: {$gte: 1000} }).sort({_id: 1}) //findOne
+			.find({_id: {$gte: 1000} }).sort({_id: -1}) //findOne
 			.exec(function (err, result) {
 				if (err) { throw err; }
-       console.log(result)
+        console.log(result)
         let submit = new Issues(),
             project = req.body,
-            id      = result ? result[result.length-1]._id + 1 : 1001;
+            id      = result[0]._id++;
         
         submit.issue_title = project.issue_title;
         submit.issue_text  = project.issue_text;
@@ -34,14 +34,12 @@ function IssueHandler () {
         submit.status_text = project.status_text;
         submit._id         = id;
         submit.created_on  = new Date(Date.now()).toString();
-        submit.update_on   = null;
         submit.open        = true;
-      //console.log(submit)
-      submit.save( (err, success) => {
-        if(err) return console.error(err);
-        console.log(success)
-        //res.json(success)
-      });
+
+        // submit.save( (err, success) => {
+        //   if(err) return console.error(err);
+        //   res.json(success)
+        // });
 				res.json(submit);
 			});
 	};
