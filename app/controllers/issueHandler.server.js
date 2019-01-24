@@ -15,13 +15,22 @@ function IssueHandler () {
   };
 
 	this.submitIssue = function (req, res) {
-    
+    console.log(req.body)
 		Issues
-			.findOne({ 'github.id': req.user.github.id }, { '_id': false })
+			.findOne({}, { '_id': false })
 			.exec(function (err, result) {
 				if (err) { throw err; }
-
-				res.json();
+      
+        let submit = new Issues(),
+            project = req.body;
+        
+        submit.issue_title = project.issue_title;
+        submit.issue_text = project.issue_text;
+        submit.created_by = project.created_by;
+        submit.assigned_to = project.assigned_to;
+        submit.status_text = project.status_text;
+        console.log(result)
+				//res.json();
 			});
 	};
 
