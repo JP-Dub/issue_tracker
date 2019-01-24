@@ -51,17 +51,21 @@ function IssueHandler () {
 	};
 
 	this.updateIssue = function (req, res) {
-   let project = req.body
+    console.log(req.body)
+   let project = req.body,
+       condition = {};
+    
+   
 		Issues
       //.find({ _id: req.body._id})
 			.findOneAndUpdate({ 
         _id: project._id
         },{
-        issue_title: project.issue_title,
-        issue_text: project.issue_text,
-        created_by: project.created_by,
-        assigned_to: project.assigned_to,
-        status_text: project.status_text,
+        // issue_title: project.issue_title,
+        // issue_text: project.issue_text,
+        // created_by: project.created_by,
+        // assigned_to: project.assigned_to,
+        // status_text: project.status_text,
         open: false, 
         updated_on: new Date(Date.now()).toString()
         },{
@@ -69,7 +73,7 @@ function IssueHandler () {
       })
 			.exec(function (err, result) {
 					if (err) { throw err; }
-            console.log(result)
+            //console.log(result)
 					res.json(result);
 				}
 			);
