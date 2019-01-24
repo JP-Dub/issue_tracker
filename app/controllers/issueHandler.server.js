@@ -51,13 +51,17 @@ function IssueHandler () {
 	};
 
 	this.updateIssue = function (req, res) {
-    console.log(req.body)
+   let project = req.body
 		Issues
       //.find({ _id: req.body._id})
-			.findByIdAndUpdate({ 
-        _id: req.body._id
+			.findOneAndUpdate({ 
+        _id: project._id
         },{
-        issue_title: req.body.issue_title,
+        issue_title: project.issue_title,
+        issue_text: project.issue_text,
+        created_by: project.created_by,
+        assigned_to: project.assigned_to,
+        status_text: project.status_text,
         open: false, 
         updated_on: new Date(Date.now()).toString()
         },{
