@@ -19,10 +19,10 @@ function IssueHandler () {
 	this.submitIssue = function (req, res) {
     console.log(req.body)
 		Issues
-			.find({_id: {$gte: 1000} }).sort({_id: -1}) //findOne
+			.find({_id: {$gte: 1000} }).sort({_id: -1})
 			.exec(function (err, result) {
 				if (err) { throw err; }
-        console.log(result)
+   
         let submit = new Issues(),
             project = req.body,
             id      = result[0]._id + 1;
