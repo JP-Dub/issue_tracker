@@ -7,7 +7,7 @@
 */
 
 var path = process.cwd();
-var ClickHandler = require(path + '/app/controllers/clickHandler.server.js');
+var IssueHandler = require(path + '/app/controllers/issueHandler.server.js');
 
 'use strict';
 
@@ -18,27 +18,20 @@ var ObjectId = require('mongodb').ObjectID;
 const CONNECTION_STRING = process.env.DB; //MongoClient.connect(CONNECTION_STRING, function(err, db) {});
 
 module.exports = function (app) {
+  
+  let issueHandler = new IssueHandler();
 
   app.route('/api/issues/:project')
   
-    .get(function (req, res){
+    .get((req, res) => {
       var project = req.params.project;
-     
     })
     
-    .post(function (req, res){
-      var project = req.params.project;
-      console.log('post', req.body)
-    })
+    .post(issueHandler.submitIssue)
     
-    .put(function (req, res){
-      var project = req.params.project;
-      console.log('put', req.body)
-    })
     
-    .delete(function (req, res){
-      var project = req.params.project;
-      console.log('delete', req.body)
-    });
+    .put(issueHandler.updateIssue)
+    
+    .delete(issueHandler.deleteIssue);
     
 };
