@@ -10,7 +10,7 @@ function IssueHandler () {
     .find({})
     .exec( (err, result) => {
           if(err) throw err;
-          console.log('results', result)
+          console.log('results',result,  result[0]._id)
           });
     
   };
@@ -18,13 +18,13 @@ function IssueHandler () {
 	this.submitIssue = function (req, res) {
     console.log(req.body)
 		Issues
-			.find({})//findOne
+			.find({_id: /\d/ }).sort({_id: 1}) //findOne
 			.exec(function (err, result) {
 				if (err) { throw err; }
        console.log(result)
         let submit = new Issues(),
             project = req.body,
-            id      = result ? result._id++ : 1001;
+            id      = result ? result[result.length-1]._id + 1 : 1001;
         
         submit.issue_title = project.issue_title;
         submit.issue_text  = project.issue_text;
