@@ -5,12 +5,18 @@ var Issues = require('../model/issues.js');
 function IssueHandler () {
   
   this.viewIssue = (req, res) => {
+    let project = req.params.project,
+        query = req.query;
+    
     Issues
-    .find({ _id: { $gte: 1000 } })
-    .sort({_id: 1})
+    .find({ _id: { $gte: 1000 }//,
+          //issue_title: project || null,
+          //created_by: query.created_by || null
+          })
+    .sort({_id: -1})
     .exec( (err, result) => {
           if(err) throw err;
-          console.log('results', req.params)
+          console.log('results', req.params, req.query)
           res.json(result)
          });
   };
