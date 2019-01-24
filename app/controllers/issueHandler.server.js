@@ -6,19 +6,19 @@ function IssueHandler () {
   
   this.viewIssue = (req, res) => {
     let project = req.params.project,
-        query = req.query;
+        query   = req.query;
     
     Issues
-    .find({ _id: { $gte: 1000 }//,
-          //issue_title: project || null,
-          //created_by: query.created_by || null
-          })
-    .sort({_id: -1})
-    .exec( (err, result) => {
-          if(err) throw err;
-          console.log('results', req.params, req.query)
-          res.json(result)
-         });
+      .find({ _id: { $gte: 1000 }//,
+            //issue_title: project || null,
+            //created_by: query.created_by || null
+            })
+      .sort({_id: -1})
+      .exec( (err, result) => {
+            if(err) throw err;
+            console.log('results', req.params, req.query)
+            res.json(result)
+           });
   };
 
 	this.submitIssue = function (req, res) {
@@ -29,7 +29,7 @@ function IssueHandler () {
 			.exec(function (err, result) {
 				if (err) { throw err; }
    
-        let submit = new Issues(),
+        let submit  = new Issues(),
             project = req.body,
             id      = result[0]._id + 1;
         
@@ -51,12 +51,14 @@ function IssueHandler () {
 	};
 
 	this.updateIssue = function (req, res) {
+    console.log(req.body)
 		Issues
-			.findOneAndUpdate({ 'github.id': req.user.github.id }, { $inc: { 'nbrClicks.clicks': 1 } })
+      .s
+			.findOneAndUpdate({} )
 			.exec(function (err, result) {
 					if (err) { throw err; }
-
-					res.json(result.nbrClicks);
+            console.log(result)
+					res.json(result);
 				}
 			);
 	};
