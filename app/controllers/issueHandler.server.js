@@ -53,8 +53,8 @@ function IssueHandler () {
 	this.updateIssue = function (req, res) {
     console.log(req.body)
 		Issues
-      .s
-			.findOneAndUpdate({} )
+      .find({ _id: req.body._id})
+			.findOneAndUpdate({open: false, updated_on: new Date(Date.now()).toString();})
 			.exec(function (err, result) {
 					if (err) { throw err; }
             console.log(result)
