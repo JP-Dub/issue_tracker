@@ -50,8 +50,7 @@ function IssueHandler () {
 			});
 	};
 
-	this.updateIssue = function (req, res) {
-    
+	this.updateIssue = function (req, res) {   
    let project = req.body,
        conditions= {};
     
