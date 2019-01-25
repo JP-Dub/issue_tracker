@@ -78,7 +78,8 @@ function IssueHandler () {
       })
 			.exec(function (err, result) {
 					if (err) { throw err; }
-            //console.log(result)
+          
+          result.save( (err)
 					res.json(result);
 				}, {'returnOriginal': false}
 			);
