@@ -16,7 +16,7 @@ function IssueHandler () {
       .sort({_id: -1})
       .exec( (err, result) => {
             if(err) throw err;
-            console.log('results', req.params, req.query)
+            //console.log('results', req.params, req.query)
             res.json(result)
            });
   };
@@ -76,6 +76,7 @@ function IssueHandler () {
 	};
 
 	this.deleteIssue = function (req, res) {
+    console.log(req.params, req.query, req.body)
 		Issues
 			.findOneAndDelete({_id: req.body._id})
 			.exec(function (err, result) {
