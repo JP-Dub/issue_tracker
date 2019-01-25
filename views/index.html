@@ -78,6 +78,7 @@
             type: 'post',
             data: $('#testForm').serialize(),
             success: function(data) {
+              $('#testForm').each( () => this.reset() );
               $('#jsonResult').text(JSON.stringify(data));
             }
           });
