@@ -51,7 +51,7 @@ function IssueHandler () {
 	};
 
 	this.updateIssue = function (req, res) {
-    console.log(req.body)
+    
    let project = req.body,
        conditions= {};
     
@@ -65,23 +65,20 @@ function IssueHandler () {
       //.find({ _id: req.body._id})
 			.findOneAndUpdate({ 
         _id: project._id
-        }, conditions
-        //  issue_title: project.issue_title || null,
-        // issue_text: project.issue_text,
-        // created_by: project.created_by,
-        // assigned_to: project.assigned_to,
-        // status_text: project.status_text,
-        // open: false, 
-        // updated_on: new Date(Date.now()).toString()
+        }, 
+        conditions
         ,{
         upsert: true
       })
 			.exec(function (err, result) {
-					if (err) { throw err; }
+					if (err) throw err;
           
-          result.save( (err)
-					res.json(result);
-				}, {'returnOriginal': false}
+          result.save( (err, success) => {
+            if(err) return console.error(err); 
+            console.log(success)
+					  res.json(success);
+          }, {returnOriginal: false})
+				}
 			);
 	};
 
