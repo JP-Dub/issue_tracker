@@ -75,7 +75,7 @@ function IssueHandler () {
 					if (err) { throw err; }
             //console.log(result)
 					res.json(result);
-				}, {returnOriginal: false}
+				}, {'returnOriginal': false}
 			);
 	};
 
