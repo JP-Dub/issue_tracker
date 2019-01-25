@@ -40,6 +40,7 @@ function IssueHandler () {
         submit.status_text = project.status_text;
         submit._id         = id;
         submit.created_on  = new Date(Date.now()).toString();
+        submit.updated_on  = '';
         submit.open        = true;
 
         submit.save( (err, success) => {
@@ -66,7 +67,6 @@ function IssueHandler () {
         }, 
         conditions // object with fields to be updated
         ,{
-        upsert: true,
         new : true
       })
 			.exec(function (err, result) {
@@ -81,7 +81,7 @@ function IssueHandler () {
 			.findOneAndDelete({_id: req.body._id})
 			.exec(function (err, result) {
 					if (err) throw err; 
-
+          console.log(result)
 					res.json(result);
 				}
 			);
