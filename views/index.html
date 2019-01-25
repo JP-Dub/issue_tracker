@@ -90,6 +90,7 @@
             type: 'put',
             data: $('#testForm2').serialize(),
             success: function(data) {
+              $('#testForm2').each( function() { this.reset() });
               $('#jsonResult').text(JSON.stringify(data));
             }
           });
@@ -101,6 +102,7 @@
             type: 'delete',
             data: $('#testForm3').serialize(),
             success: function(data) {
+              $('#testForm3').each( function() { this.reset() });
               $('#jsonResult').text(JSON.stringify(data));
             }
           });
