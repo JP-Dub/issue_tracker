@@ -62,24 +62,18 @@ function IssueHandler () {
     }
    
 		Issues
-      //.find({ _id: req.body._id})
 			.findOneAndUpdate({ 
         _id: project._id
         }, 
-        conditions
+        conditions // object with fields to be updated
         ,{
-        upsert: true
+        upsert: true,
+        new : true
       })
 			.exec(function (err, result) {
 					if (err) throw err;
-          
-          result.save( (err, success) => {
-            if(err) return console.error(err); 
-            console.log(success)
-					  res.json(success);
-          }, {returnOriginal: false})
-				}
-			);
+					res.json(result);
+				});
 	};
 
 	this.deleteIssue = function (req, res) {
