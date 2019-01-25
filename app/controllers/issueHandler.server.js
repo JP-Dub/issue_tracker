@@ -53,22 +53,27 @@ function IssueHandler () {
 	this.updateIssue = function (req, res) {
     console.log(req.body)
    let project = req.body,
-       condition = {};
+       conditions= {};
     
+    for(var key in project) {
+      var val = project[key];
+      val ? conditions[key] = val : false;  
+      conditions['updated_on'] = new Date(Date.now()).toString();
+    }
    
 		Issues
       //.find({ _id: req.body._id})
 			.findOneAndUpdate({ 
         _id: project._id
-        },{
-         issue_title: project.issue_title || null,
+        }, conditions
+        //  issue_title: project.issue_title || null,
         // issue_text: project.issue_text,
         // created_by: project.created_by,
         // assigned_to: project.assigned_to,
         // status_text: project.status_text,
-        open: false, 
-        updated_on: new Date(Date.now()).toString()
-        },{
+        // open: false, 
+        // updated_on: new Date(Date.now()).toString()
+        ,{
         upsert: true
       })
 			.exec(function (err, result) {
