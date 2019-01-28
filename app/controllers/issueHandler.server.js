@@ -71,23 +71,27 @@ function IssueHandler () {
       })
 			.exec(function (err, result) {
           var message = { update: '' };
-					err ? message['update'] = 'Could not update ' + project._id 
-              : message['update'] = 'Successfully updated ' + project._id;
+      
+					err ? message['update'] = 'could not update ' + project._id 
+              : message['update'] = 'successfully updated ' + project._id;
 					res.json(message);
 				});
 	};
 
 	this.deleteIssue = function (req, res) {
-    console.log(req.params, req.query, req.body)
+    console.log(req.body, req.body._id, parseInt(req.body._id)
     var id = req.body._id;
-    if(!id) return res.json({error: '_id error'
+    
+    if(parseInt(id) !== /\d{4}/) return res.send('_id error');
       
 		Issues
-			.findOneAndDelete({_id: req.body._id})
+			.findOneAndDelete({_id: id})
 			.exec(function (err, result) {
-					if (err) throw err; 
+          var message = {};
+					err ? message['failed'] = 'could not delete ' + id
+              : message['success'] = 'deleted ' + id;
           
-					res.json(result);
+					res.json(message);
 				}
 			);
 	};
