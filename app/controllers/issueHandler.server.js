@@ -21,7 +21,7 @@ function IssueHandler () {
       val && key !== 'open' ? query[key] = { $regex: val, $options: 'i, m'} 
                             : query[key] = val;      
     }
-    
+    console.log(project, req.params)
     Issues 
       .find({})
       .or([query])
@@ -35,7 +35,7 @@ function IssueHandler () {
   };
 
 	this.submitIssue = function (req, res) {
-    console.log(req.params, req.query, req.body);
+  
 		Issues
 			.find({_id: { $gte: 1000 } })
       .sort({_id: -1})
@@ -44,8 +44,9 @@ function IssueHandler () {
    
         let submit  = new Issues(),
             project = req.body,
-            id      = result[0]._id + 1;
-        
+            id      = result[0]._id + 1 || 1001;
+      
+        submit.project     = req.params.project;
         submit.issue_title = project.issue_title;
         submit.issue_text  = project.issue_text;
         submit.created_by  = project.created_by;
