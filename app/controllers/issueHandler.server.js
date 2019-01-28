@@ -7,7 +7,7 @@ function IssueHandler () {
   this.viewIssue = (req, res) => {
     let project = req.params.project,
         query   = req.query;
-    
+    console.log(project, query)
     Issues
       .find({ _id: { $gte: 1000 }//,
             //issue_title: project || null,
@@ -17,7 +17,7 @@ function IssueHandler () {
       .exec( (err, result) => {
             if(err) throw err;
             //console.log('results', req.params, req.query)
-            res.json(result)
+            return res.json(result)
            });
   };
 
@@ -40,12 +40,12 @@ function IssueHandler () {
         submit.status_text = project.status_text;
         submit._id         = id;
         submit.created_on  = new Date(Date.now()).toString();
-        submit.updated_on  = '';
+        submit.updated_on  = submit.created_on;
         submit.open        = true;
 
         submit.save( (err, success) => {
           if(err) return console.error(err);
-          res.json(success)
+          return res.json(success)
         });
 				
 			});
@@ -72,14 +72,14 @@ function IssueHandler () {
 			.exec(function (err, result) {
           var message = { update: '' };
       
-					err ? message['update'] = 'could not update ' + project._id 
-              : message['update'] = 'successfully updated ' + project._id;
-					res.json(message);
+					err || !result ? message['update'] = 'could not update ' + project._id 
+                         : message['update'] = 'successfully updated ' + project._id;
+      
+					return res.json(message);
 				});
 	};
 
 	this.deleteIssue = function (req, res) {
-    console.log(req.body, req.body._id, parseInt(req.body._id));
     var id = req.body._id;
     
     if(!Number.isInteger(parseInt(id)) ) return res.send('_id error');
@@ -89,9 +89,9 @@ function IssueHandler () {
 			.exec(function (err, result) {
           var message = {};
 					err || !result ? message['failed'] = 'could not delete ' + id
-              : message['success'] = 'deleted ' + id;
-          console.log(result)
-					res.json(message);
+                         : message['success'] = 'deleted ' + id;
+          
+					return res.json(message);
 				}
 			);
 	};
