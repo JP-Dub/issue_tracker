@@ -8,9 +8,10 @@ function IssueHandler () {
     let project = req.params.project,
         query   = req.query;
     console.log(project, query)
-    Issues
-      .find({ _id: { $gte: 1000 }})
-      .select({issue_title : 1, created_by: 1, issue_text: 1, assigned_to: 1, status_text: 1, created_on: 1, updated_on: 1, open: 1})
+    
+    Issues //{ _id: { $gte: 1000 }}
+      .find({}) 
+      .select({issue_title : 1, created_by: 1, issue_text: 1, assigned_to: 1, status_text: 1, created_on: 1, updated_on: 1, open: 1, _id: 1})
       .sort({_id: -1})
       .exec( (err, result) => {
             if(err) throw err;
