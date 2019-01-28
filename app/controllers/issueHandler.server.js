@@ -23,9 +23,6 @@ function IssueHandler () {
                             : query[key] = val;      
     }
     
-   // project['project'] == '' ? project = {} : false;
-    
-    console.log(project, req.params)
     Issues 
       .find(project)
       .or([query])
@@ -50,14 +47,14 @@ function IssueHandler () {
         let submit  = new Issues(),
             project = req.body,
             id      = result[0]._id + 1;
-      
+        
+        submit._id         = id;
         submit.project     = req.params.project;
         submit.issue_title = project.issue_title;
         submit.issue_text  = project.issue_text;
         submit.created_by  = project.created_by;
         submit.assigned_to = project.assigned_to;
         submit.status_text = project.status_text;
-        submit._id         = id;
         submit.created_on  = new Date(Date.now()).toString();
         submit.updated_on  = submit.created_on;
         submit.open        = true;
