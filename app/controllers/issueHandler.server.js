@@ -9,14 +9,8 @@ function IssueHandler () {
         query   = req.query;
     console.log(project, query)
     Issues
-      .find({ _id: { $gte: 1000 }//,
-            //issue_title: project || null,
-            //created_by: query.created_by || null
-            }, {
-            field: {$in: [
-            'issue_title',
-            'created_by']}
-      })
+      .find({ _id: { $gte: 1000 }})
+      .select({issue_title : 1, created_by: 1, issue_text: 1, assigned_to: 1, status_text: 1, created_on: 1, updated_on: 1, open: 1})
       .sort({_id: -1})
       .exec( (err, result) => {
             if(err) throw err;
