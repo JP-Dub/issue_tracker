@@ -16,17 +16,17 @@ function IssueHandler () {
   this.viewIssue = (req, res) => {
     let project = req.params.project,
         query   = req.query;
-    console.log(project, query)
+    console.log({issue_title: project}, query)
     //let conditions = createConditions(project, {});
     //console.log(conditions);
     Issues //{ _id: { $gte: 1000 }}
       .find({})
-      .or([query])
+      .or([project, query])
       .select({issue_title : 1, created_by: 1, issue_text: 1, assigned_to: 1, status_text: 1, created_on: 1, updated_on: 1, open: 1, _id: 1})
       .sort({_id: -1})
       .exec( (err, result) => {
             if(err) throw err;
-            //console.log('results', req.params, req.query)
+        
             return res.json(result)
            });
   };
@@ -63,8 +63,8 @@ function IssueHandler () {
 
 	this.updateIssue = function (req, res) {   
    let project = req.body,
-     //conditions = createConditions(project, {});
        conditions = {};
+    
     for(var key in project) {
       var val = project[key];
       val ? conditions[key] = val : false;  
