@@ -14,16 +14,18 @@ function IssueHandler () {
   // }
   
   this.viewIssue = (req, res) => {
-    let project = req.params.project,
+    let project = !req.params.project ? {} : req.params,
         query   = req.query;
-   for(var key in query) {
+   
+    for(var key in query) {
       var val = query[key];
       val && key !== 'open' ? query[key] = { $regex: val, $options: 'i, m'} 
                             : query[key] = val;      
     }
+    
     console.log(project, req.params)
     Issues 
-      .find({})
+      .find(project)
       .or([query])
       .select({project: 0})//issue_title : 1, created_by: 1, issue_text: 1, assigned_to: 1, status_text: 1, created_on: 1, updated_on: 1, open: 1, _id: 1})
       .sort({_id: -1})
