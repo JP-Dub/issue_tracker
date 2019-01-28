@@ -16,7 +16,12 @@ function IssueHandler () {
   this.viewIssue = (req, res) => {
     let project = req.params.project,
         query   = req.query;
+   for(var key in query) {
+      var val = query[key];
+      val ? query[key] = { $regex: val, $options: 'i, m'} : false;      
+    }
     console.log( query)
+    
     //let conditions = createConditions(project, {});
     //console.log(conditions);
     Issues //{ _id: { $gte: 1000 }}
