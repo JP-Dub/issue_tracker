@@ -40,7 +40,7 @@ function IssueHandler () {
 			.find({_id: { $gte: 1000 } })
       .sort({_id: -1})
 			.exec(function (err, result) {
-         console.log(result)
+        
 				if (err) { throw err; }
        
         let submit  = new Issues(),
@@ -61,10 +61,14 @@ function IssueHandler () {
 
         submit.save( (err, success) => {
           if(err) return console.error(err);
+          var object = {};
+          for(var key in success) {
+            var val = success[key];
+            key !== 'project' ? object[key] = val : false;
+          }
           
-          delete success['project'];
-          console.log(success)
-          return res.json(success)
+          console.log(object)
+          return res.json(object)
         });
 				
 			});
