@@ -35,16 +35,18 @@ function IssueHandler () {
   };
 
 	this.submitIssue = function (req, res) {
-  
+  !req.body._id ? req.body['_id'] = 1000: false;
+    console.log(req.body)
 		Issues
-			.find({_id: { $gte: 1000 } })
-      .sort({_id: -1})
+			.find({})//{_id: { $gte: 1000 } })
+      //.sort({_id: -1})
 			.exec(function (err, result) {
+         console.log(result)
 				if (err) { throw err; }
-   
+        if(!result) { 
         let submit  = new Issues(),
             project = req.body,
-            id      = result[0]._id + 1 || 1001;
+            id      = result[0]._id + 1;
       
         submit.project     = req.params.project;
         submit.issue_title = project.issue_title;
