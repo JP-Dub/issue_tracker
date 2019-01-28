@@ -35,15 +35,14 @@ function IssueHandler () {
   };
 
 	this.submitIssue = function (req, res) {
-  !req.body._id ? req.body['_id'] = 1000: false;
-    console.log(req.body)
+
 		Issues
-			.find({})//{_id: { $gte: 1000 } })
-      //.sort({_id: -1})
+			.find({_id: { $gte: 1000 } })
+      .sort({_id: -1})
 			.exec(function (err, result) {
          console.log(result)
 				if (err) { throw err; }
-        if(!result) { 
+       
         let submit  = new Issues(),
             project = req.body,
             id      = result[0]._id + 1;
@@ -58,6 +57,7 @@ function IssueHandler () {
         submit.created_on  = new Date(Date.now()).toString();
         submit.updated_on  = submit.created_on;
         submit.open        = true;
+        
 
         submit.save( (err, success) => {
           if(err) return console.error(err);
