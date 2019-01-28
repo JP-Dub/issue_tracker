@@ -79,10 +79,10 @@ function IssueHandler () {
 	};
 
 	this.deleteIssue = function (req, res) {
-    console.log(req.body, req.body._id, parseInt(req.body._id)
+    console.log(req.body, req.body._id, parseInt(req.body._id));
     var id = req.body._id;
     
-    if(parseInt(id) !== /\d{4}/) return res.send('_id error');
+    if(!Number.isInteger(parseInt(id)) ) return res.send('_id error');
       
 		Issues
 			.findOneAndDelete({_id: id})
