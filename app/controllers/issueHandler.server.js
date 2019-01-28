@@ -4,12 +4,12 @@ var Issues = require('../model/issues.js');
 
 function IssueHandler () {
   
-  function createConditions(project, conditions) {
+  function createConditions(project, object) {
     for(var key in project) {
       var val = project[key];
-      val ? conditions[key] = val : false;  
-      conditions['updated_on'] = new Date(Date.now()).toString();
-      return conditions;
+      val ? object[key] = val : false;  
+      object['updated_on'] = new Date(Date.now()).toString();
+      return object;
     }
   }
   
@@ -17,10 +17,11 @@ function IssueHandler () {
     let project = req.params.project,
         query   = req.query;
     console.log(project, query)
-    
+    //let conditions = createConditions(project, {});
+    //console.log(conditions);
     Issues //{ _id: { $gte: 1000 }}
       .find({})
-      .or([])
+      .or([query])
       .select({issue_title : 1, created_by: 1, issue_text: 1, assigned_to: 1, status_text: 1, created_on: 1, updated_on: 1, open: 1, _id: 1})
       .sort({_id: -1})
       .exec( (err, result) => {
@@ -62,8 +63,8 @@ function IssueHandler () {
 
 	this.updateIssue = function (req, res) {   
    let project = req.body,
+     //conditions = createConditions(project, {});
        conditions = {};
-    
     for(var key in project) {
       var val = project[key];
       val ? conditions[key] = val : false;  
