@@ -18,14 +18,11 @@ function IssueHandler () {
         query   = req.query;
    for(var key in query) {
       var val = query[key];
-      val || key !== 'open' ? query[key] = { $regex: val, $options: 'i, m'} 
-           : query[key] = val;      
+      val && key !== 'open' ? query[key] = { $regex: val, $options: 'i, m'} 
+                            : query[key] = val;      
     }
-    console.log( query)
     
-    //let conditions = createConditions(project, {});
-    //console.log(conditions);
-    Issues //{ _id: { $gte: 1000 }}
+    Issues 
       .find({})
       .or([query])
       //.select({issue_title : 1, created_by: 1, issue_text: 1, assigned_to: 1, status_text: 1, created_on: 1, updated_on: 1, open: 1, _id: 1})
