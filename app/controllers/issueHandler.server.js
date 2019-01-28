@@ -37,15 +37,15 @@ function IssueHandler () {
 	this.submitIssue = function (req, res) {
 
 		Issues
-			.find({_id: { $gte: 1000 } })
-      .sort({_id: -1})
+			.find({})//{_id: { $gte: 1000 } })
+      //.sort({_id: -1})
 			.exec(function (err, result) {
          console.log(result)
 				if (err) { throw err; }
        
         let submit  = new Issues(),
             project = req.body,
-            id      = result[0]._id + 1;
+            id      = 1001//result[0]._id + 1;
       
         submit.project     = req.params.project;
         submit.issue_title = project.issue_title;
@@ -61,6 +61,7 @@ function IssueHandler () {
 
         submit.save( (err, success) => {
           if(err) return console.error(err);
+          
           return res.json(success)
         });
 				
