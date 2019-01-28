@@ -12,7 +12,11 @@ function IssueHandler () {
       .find({ _id: { $gte: 1000 }//,
             //issue_title: project || null,
             //created_by: query.created_by || null
-            })
+            }, {
+            field: {$in: [
+            'issue_title',
+            'created_by']}
+      })
       .sort({_id: -1})
       .exec( (err, result) => {
             if(err) throw err;
@@ -53,7 +57,7 @@ function IssueHandler () {
 
 	this.updateIssue = function (req, res) {   
    let project = req.body,
-       conditions= {};
+       conditions = {};
     
     for(var key in project) {
       var val = project[key];
