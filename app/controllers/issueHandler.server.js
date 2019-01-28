@@ -25,7 +25,7 @@ function IssueHandler () {
     Issues 
       .find({})
       .or([query])
-      //.select({issue_title : 1, created_by: 1, issue_text: 1, assigned_to: 1, status_text: 1, created_on: 1, updated_on: 1, open: 1, _id: 1})
+      .select({project: 0})//issue_title : 1, created_by: 1, issue_text: 1, assigned_to: 1, status_text: 1, created_on: 1, updated_on: 1, open: 1, _id: 1})
       .sort({_id: -1})
       .exec( (err, result) => {
             if(err) throw err;
@@ -37,15 +37,15 @@ function IssueHandler () {
 	this.submitIssue = function (req, res) {
 
 		Issues
-			.find({})//{_id: { $gte: 1000 } })
-      //.sort({_id: -1})
+			.find({_id: { $gte: 1000 } })
+      .sort({_id: -1})
 			.exec(function (err, result) {
          console.log(result)
 				if (err) { throw err; }
        
         let submit  = new Issues(),
             project = req.body,
-            id      = 1001//result[0]._id + 1;
+            id      = result[0]._id + 1;
       
         submit.project     = req.params.project;
         submit.issue_title = project.issue_title;
@@ -62,6 +62,8 @@ function IssueHandler () {
         submit.save( (err, success) => {
           if(err) return console.error(err);
           
+          delete success['project'];
+          console.log(success)
           return res.json(success)
         });
 				
