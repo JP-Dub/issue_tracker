@@ -70,18 +70,23 @@ function IssueHandler () {
         new : true
       })
 			.exec(function (err, result) {
-					if (err) throw err;
-					res.json(result);
+          var message = { update: '' };
+					err ? message['update'] = 'Could not update ' + project._id 
+              : message['update'] = 'Successfully updated ' + project._id;
+					res.json(message);
 				});
 	};
 
 	this.deleteIssue = function (req, res) {
     console.log(req.params, req.query, req.body)
+    var id = req.body._id;
+    if(!id) return res.json({error: '_id error'
+      
 		Issues
 			.findOneAndDelete({_id: req.body._id})
 			.exec(function (err, result) {
 					if (err) throw err; 
-          console.log(result)
+          
 					res.json(result);
 				}
 			);
