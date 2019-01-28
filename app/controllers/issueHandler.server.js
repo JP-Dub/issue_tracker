@@ -88,9 +88,9 @@ function IssueHandler () {
 			.findOneAndDelete({_id: id})
 			.exec(function (err, result) {
           var message = {};
-					err ? message['failed'] = 'could not delete ' + id
+					err || !result ? message['failed'] = 'could not delete ' + id
               : message['success'] = 'deleted ' + id;
-          
+          console.log(result)
 					res.json(message);
 				}
 			);
