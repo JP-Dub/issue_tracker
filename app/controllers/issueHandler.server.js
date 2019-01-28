@@ -4,14 +4,14 @@ var Issues = require('../model/issues.js');
 
 function IssueHandler () {
   
-  function createConditions(project, object) {
-    for(var key in project) {
-      var val = project[key];
-      val ? object[key] = val : false;  
-      object['updated_on'] = new Date(Date.now()).toString();
-      return object;
-    }
-  }
+  // function createConditions(project, object) {
+  //   for(var key in project) {
+  //     var val = project[key];
+  //     val ? object[key] = val : false;  
+  //     object['updated_on'] = new Date(Date.now()).toString();
+  //     return object;
+  //   }
+  // }
   
   this.viewIssue = (req, res) => {
     let project = req.params.project,
