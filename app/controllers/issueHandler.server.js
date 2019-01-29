@@ -53,15 +53,14 @@ function IssueHandler () {
          
         submit.save( (err, success) => {
           if(err) return console.error(err);
-          var copy = submit.constructor();
-          for(var key in submit) {
-            var val = submit[key];
-            if(submit.hasOwnProperty(key) !== 'project') copy[key] = val;
-          }
-          console.log(copy)
-          res.json(copy)
+        //   var copy = submit.constructor();
+        //   for(var key in submit) {
+        //     var val = submit[key];
+        //     if(submit.hasOwnProperty(key) !== 'project') copy[key] = val;
+        //   }
+          
         });    
-			});
+			})//.find({}).exec( (err,result) => console.log(result) )
 	};
 
 	this.updateIssue = function (req, res) {   
