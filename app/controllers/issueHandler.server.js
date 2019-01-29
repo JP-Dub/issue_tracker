@@ -68,10 +68,7 @@ function IssueHandler () {
           }
           console.log(copy)
           res.json(copy)
-        });
-
-
-      
+        });    
 			});
 	};
 
