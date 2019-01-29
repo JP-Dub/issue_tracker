@@ -51,16 +51,17 @@ function IssueHandler () {
         submit.updated_on  = submit.created_on;
         submit.open        = true;
          
-        submit.save( (err, success) => {
+        submit.save( err => {
           if(err) return console.error(err);
-        //   var copy = submit.constructor();
-        //   for(var key in submit) {
-        //     var val = submit[key];
-        //     if(submit.hasOwnProperty(key) !== 'project') copy[key] = val;
-        //   }
-          
+
+          Issues 
+            .find({_id: id}).select({project: 0})
+            .exec( (err, result) => {
+              if(err) throw err;
+              return res.json(result)
+          });          
         });    
-			})//.find({}).exec( (err,result) => console.log(result) )
+			})
 	};
 
 	this.updateIssue = function (req, res) {   
