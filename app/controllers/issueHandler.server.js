@@ -36,7 +36,7 @@ function IssueHandler () {
   };
 
 	this.submitIssue = function (req, res) {
-    var copy = {};
+
 		Issues
 			.find({_id: { $gte: 1000 } })
       .sort({_id: -1})
@@ -60,19 +60,15 @@ function IssueHandler () {
         submit.open        = true;
         
         
-        submit.save( (err, success, cb) => {
+        submit.save( (err, success) => {
           if(err) return console.error(err);
-          //var object = {};
-          for(var key in success) {
-            var val = success[key];
-            key !== 'project' ? copy[key] = val : false;
-          }
-           return cb(copy)
+          // var copy = {};
+          // for(var key in success) {
+          //   var val = success[key];
+          //   key !== 'project' ? copy[key] = val : false;
+          // }                      
         });
       
-				function object(copy, function(cb) {
-        
-        });
 			});
 	};
 
