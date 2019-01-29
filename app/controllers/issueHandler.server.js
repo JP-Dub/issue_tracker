@@ -62,14 +62,17 @@ function IssueHandler () {
         
         submit.save( (err, success) => {
           if(err) return console.error(err);
-          res.json(success)
+          var copy = submit.constructor();
+          for(var key in submit) {
+            var val = submit[key];
+          
+            submit.hasOwnProperty(key) !== 'project' ? copy[key] = val : false;
+          }
+          console.log(copy)
+          res.json(copy)
         });
 
-        // var copy = {};
-        // for(var key in obj) {
-        //     var val = obj[key];
-        //     key !== 'project' ? copy[key] = val : false;
-        //   }
+
       
 			});
 	};
