@@ -22,10 +22,10 @@ function IssueHandler () {
       .select({project: 0})
       .sort({_id: -1})
       .exec( (err, result) => {
-            if(err) throw err;
+        if(err) throw err;
         
-            return res.json(result)
-           });
+        return res.json(result)
+      });
   };
 
 	this.submitIssue = function (req, res) {
@@ -34,7 +34,7 @@ function IssueHandler () {
 			.find({_id: { $gte: 1000 } })
       .sort({_id: -1}) 
 			.exec(function (err, result) {      
-				if (err) { throw err; }
+				if (err) throw err; 
        
         let submit  = new Issues(),
             project = req.body,
@@ -70,7 +70,7 @@ function IssueHandler () {
     
     for(var key in project) {
       var val = project[key];
-      val ? conditions[key] = val : false;  
+      if(val) conditions[key] = val;  
       conditions['updated_on'] = new Date(Date.now()).toString();
     }
    
@@ -94,7 +94,7 @@ function IssueHandler () {
 
 	this.deleteIssue = function (req, res) {
     var id = req.body._id;
-    
+    // check if id is a number
     if(!Number.isInteger(parseInt(id)) ) return res.send('_id error');
       
 		Issues
