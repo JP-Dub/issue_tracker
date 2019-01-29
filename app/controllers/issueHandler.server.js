@@ -65,11 +65,11 @@ function IssueHandler () {
           res.json(success)
         });
 
-          //      var copy = {};
-          // for(var key in obj) {
-          //   var val = obj[key];
-          //   key !== 'project' ? copy[key] = val : false;
-          // }
+        // var copy = {};
+        // for(var key in obj) {
+        //     var val = obj[key];
+        //     key !== 'project' ? copy[key] = val : false;
+        //   }
       
 			});
 	};
