@@ -65,8 +65,7 @@ function IssueHandler () {
           var copy = submit.constructor();
           for(var key in submit) {
             var val = submit[key];
-          
-            submit.hasOwnProperty(key) !== 'project' ? copy[key] = val : false;
+            if(submit.hasOwnProperty(key) !== 'project') copy[key] = val;
           }
           console.log(copy)
           res.json(copy)
