@@ -17,6 +17,7 @@ function IssueHandler () {
     var project = req.params['project'] !== '{}' ? req.params: {},
         query   = req.query;
    
+    // add regex and options to query
     for(var key in query) {
       var val = query[key];
       val && key !== 'open' ? query[key] = { $regex: val, $options: 'i, m'} 
@@ -26,7 +27,7 @@ function IssueHandler () {
     Issues 
       .find(project)
       .or([query])
-      .select({project: 0})//issue_title : 1, created_by: 1, issue_text: 1, assigned_to: 1, status_text: 1, created_on: 1, updated_on: 1, open: 1, _id: 1})
+      .select({project: 0})
       .sort({_id: -1})
       .exec( (err, result) => {
             if(err) throw err;
@@ -39,9 +40,8 @@ function IssueHandler () {
 
 		Issues
 			.find({_id: { $gte: 1000 } })
-      .sort({_id: -1})
-			.exec(function (err, result) {
-        
+      .sort({_id: -1}) 
+			.exec(function (err, result) {      
 				if (err) { throw err; }
        
         let submit  = new Issues(),
@@ -58,8 +58,7 @@ function IssueHandler () {
         submit.created_on  = new Date(Date.now()).toString();
         submit.updated_on  = submit.created_on;
         submit.open        = true;
-        
-        
+         
         submit.save( (err, success) => {
           if(err) return console.error(err);
           var copy = submit.constructor();
