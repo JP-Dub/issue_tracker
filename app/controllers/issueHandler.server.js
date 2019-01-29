@@ -60,18 +60,19 @@ function IssueHandler () {
         submit.open        = true;
         
         
-        submit.save( (err, success) => {
+        submit.save( (err, success, cb) => {
           if(err) return console.error(err);
           //var object = {};
           for(var key in success) {
             var val = success[key];
             key !== 'project' ? copy[key] = val : false;
           }
-          
-          
+           return cb(copy)
         });
-				console.log(copy)
-        return res.json(copy)
+      
+				function object(copy, function(cb) {
+        
+        });
 			});
 	};
 
