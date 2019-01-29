@@ -62,12 +62,14 @@ function IssueHandler () {
         
         submit.save( (err, success) => {
           if(err) return console.error(err);
-          // var copy = {};
-          // for(var key in success) {
-          //   var val = success[key];
-          //   key !== 'project' ? copy[key] = val : false;
-          // }                      
+          res.json(success)
         });
+
+          //      var copy = {};
+          // for(var key in obj) {
+          //   var val = obj[key];
+          //   key !== 'project' ? copy[key] = val : false;
+          // }
       
 			});
 	};
