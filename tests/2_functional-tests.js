@@ -139,7 +139,26 @@ suite('Functional Tests', function() {
       });
       
       test('Multiple fields to update', function(done) {
-        
+       chai.request(server)
+        .put('/api/issues/test')
+        .send({
+          _id: testObj._id,
+          issue_text: 'text field has been updated',
+          assigned_to: 'Functional Test - Multiple fields to update',
+        })
+        .end(function(err, res){
+          assert.equal(res.status, 200);
+          // confirmation of update
+          assert.equal(res.text, 'successfully updated ' + testObj._id);
+          // validates previous field value
+          assert.equal(testObj.issue_title, 'Title');
+          // validates current field value after update
+          searchIssues({_id: testObj._id}, function(current) {
+            assert.equal(current.issue_title, 'One field to update');            
+          });
+         
+          done();
+        });          
       });
       
     });
