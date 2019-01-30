@@ -85,9 +85,12 @@ function IssueHandler () {
       }  
     }    
     
-    !updates ? res.send('no update field sent') : 
-               conditions['updated_on'] = new Date(Date.now()).toString();
-   console.log(conditions)
+    if(updates) {
+      conditions['updated_on'] = new Date(Date.now()).toString();
+    } else {
+       return res.send('no update field sent') ;
+    }
+
 		Issues
 			.findOneAndUpdate({ 
         _id: project._id
@@ -102,7 +105,7 @@ function IssueHandler () {
 					err || !result ? message = 'could not update ' + project._id 
                          : message = 'successfully updated ' + project._id;
       
-					return res.json(message);
+					return res.send(message);
 				});
 	};
 
