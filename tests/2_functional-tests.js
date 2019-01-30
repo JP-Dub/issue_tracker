@@ -10,13 +10,14 @@ var chaiHttp = require('chai-http');
 var chai = require('chai');
 var assert = chai.assert;
 var server = require('../server');
+
 var path = process.cwd();
 var Issues = require(path + '/app/model/issues.js');
 
 // store a copy of the created (issue) object for tests purposes
 var testObj;
 
-// store a copy of id number for other created object
+// store a copy of id number of second object / will be deleted
 var secondaryIdNum;
 
 
@@ -25,13 +26,13 @@ var secondaryIdNum;
 chai.use(chaiHttp);
 
 suite('Functional Tests', function() {
-  
+    // used to compare previous and current field values
     function searchIssues(data, cb) {    
       Issues.findOne(data).exec( (err, results) => {
                 if(err) throw err;
                 cb(results)
               });
-    }  
+    };  
   
     suite('POST /api/issues/{project} => object with issue data', function() {
       
@@ -173,7 +174,7 @@ suite('Functional Tests', function() {
          
           done();
         });          
-      });
+      });  
       
     });
     
@@ -204,7 +205,6 @@ suite('Functional Tests', function() {
         .get('/api/issues/test')
         .query({_id: testObj._id})
         .end(function(err, res){
-          console.log(testObj._id)
           assert.equal(res.status, 200);
           assert.isArray(res.body);
           assert.property(res.body[0], 'issue_title');
@@ -223,7 +223,7 @@ suite('Functional Tests', function() {
       test('Multiple filters (test for multiple fields you know will be in the db for a return)', function(done) {
         chai.request(server)
         .get('/api/issues/test')
-        .query({open: true, status_text: testObj.status_text})
+        .query({open: true, created_by: testObj.created_by})
         .end(function(err, res){
           assert.equal(res.status, 200);
           assert.isArray(res.body);
@@ -238,8 +238,7 @@ suite('Functional Tests', function() {
           assert.property(res.body[0], '_id');
           done();
         });        
-      });
-      
+      });      
     });
     
     suite('DELETE /api/issues/{project} => text', function() {
@@ -267,8 +266,7 @@ suite('Functional Tests', function() {
           assert.equal(res.status, 200);
           assert.propertyVal(res.body,  'success', 'deleted ' + testObj._id );  
           done();
-        });  
-         
+        });         
       });
       
       test('Destroy other test object', function(done) {
@@ -281,8 +279,7 @@ suite('Functional Tests', function() {
           assert.equal(res.status, 200);
           assert.propertyVal(res.body,  'success', 'deleted ' + secondaryIdNum );  
           done();
-        });  
-         
+        });          
       });      
       
     });
