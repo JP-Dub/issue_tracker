@@ -79,10 +79,8 @@ function IssueHandler () {
       var val = project[key];
       if(val) conditions[key] = val;  
       conditions['updated_on'] = new Date(Date.now()).toString();
-      if(!conditions.hasOwnProperty(key)) return res.send('No body'); 
-    }
-    
-    
+      //if(!conditions.hasOwnProperty(key)) return res.send('No body'); 
+    }    
    
 		Issues
 			.findOneAndUpdate({ 
