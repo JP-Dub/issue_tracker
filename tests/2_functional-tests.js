@@ -10,7 +10,9 @@ var chaiHttp = require('chai-http');
 var chai = require('chai');
 var assert = chai.assert;
 var server = require('../server');
-var Issues = require('../model/issues.js');
+var path = process.cwd();
+console.log(path)
+var Issues = require(path + '/app/model/issues.js');
 
 var testObj;
 
@@ -112,7 +114,6 @@ suite('Functional Tests', function() {
       });
       
       test('One field to update', function(done) {
-       //var previous = searchIssues({_id: 1015});
        chai.request(server)
         .put('/api/issues/test')
         .send({
@@ -125,9 +126,7 @@ suite('Functional Tests', function() {
           assert.equal(testObj.issue_title, 'Title to be tested');
           
           searchIssues({_id: testObj._id}, function(current) {
-            assert.equal(current._id, '1015');
             assert.equal(current.issue_title, 'One field to update');            
-          });
 
           });
          
