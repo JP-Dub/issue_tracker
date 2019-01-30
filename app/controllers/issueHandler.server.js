@@ -74,7 +74,7 @@ function IssueHandler () {
 	this.updateIssue = function (req, res) {   
    let project = req.body,
        conditions = {};
-    
+    console.log(project)
     for(var key in project) {
       var val = project[key];
       if(val) conditions[key] = val;  
