@@ -86,12 +86,7 @@ suite('Functional Tests', function() {
        chai.request(server)
         .post('/api/issues/test')
         .send({
-          _id: 1001,
-          issue_title: '',
-          issue_text: '',
-          created_by: '',
-          assigned_to: '',
-          status_text: ''
+          _id: 1001
         })
         .end(function(err, res){
           assert.equal(res.status, 200);
@@ -104,16 +99,13 @@ suite('Functional Tests', function() {
        chai.request(server)
         .post('/api/issues/test')
         .send({
-          _id: 1001,
-          issue_title: '',
-          issue_text: '',
-          created_by: '',
-          assigned_to: '',
-          status_text: ''
+          _id: 1015,
+          issue_title: 'Testing title update',
         })
         .end(function(err, res){
           assert.equal(res.status, 200);
-          assert.equal(res.text, 'No body');
+          assert.equal(res.body[0]._id, '1015');
+          assert.equal(res.body[0].issue_title, 'Testing title update');
           done();
         });          
       });
