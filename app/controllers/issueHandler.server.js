@@ -35,6 +35,8 @@ function IssueHandler () {
       .sort({_id: -1}) 
 			.exec(function (err, result) {      
 				if (err) throw err; 
+        
+        
        
         let submit  = new Issues(),
             project = req.body,
