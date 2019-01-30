@@ -16,6 +16,9 @@ var Issues = require(path + '/app/model/issues.js');
 // store a copy of the created (issue) object for tests purposes
 var testObj;
 
+// store a copy of id number for other created object
+var secondaryIdNum;
+
 
 
 
@@ -66,6 +69,7 @@ suite('Functional Tests', function() {
         })
         .end(function(err, res){
           var body = res.body[0];
+          secondaryIdNum = body._id;
           assert.equal(res.status, 200);
           assert.isAtLeast(body.issue_title.length, 1, 'String length is greater than or equal to 1');
           assert.isAtLeast(body.issue_text.length, 1, 'String length is greater than or equal to 1');
@@ -263,8 +267,23 @@ suite('Functional Tests', function() {
           assert.equal(res.status, 200);
           assert.propertyVal(res.body,  'success', 'deleted ' + testObj._id );  
           done();
-        });         
+        });  
+         
       });
+      
+      test('Destroy other test object', function(done) {
+       chai.request(server)
+        .delete('/api/issues/test')
+        .send({
+          _id: secondaryIdNum
+        })
+        .end(function(err, res){
+          assert.equal(res.status, 200);
+          assert.propertyVal(res.body,  'success', 'deleted ' + secondaryIdNum );  
+          done();
+        });  
+         
+      });      
       
     });
 
