@@ -72,7 +72,7 @@ suite('Functional Tests', function() {
           status_text: ''
         })
         .end(function(err, res){
-         console.log('err', err, res, res.body)
+         console.log('res.body', res.text)
           var body = res.body[0];
           assert.equal(res.status, 200);
           assert.fail();

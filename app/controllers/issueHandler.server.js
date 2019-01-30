@@ -35,12 +35,16 @@ function IssueHandler () {
       .sort({_id: -1}) 
 			.exec(function (err, result) {      
 				if (err) throw err; 
-        
-        
        
         let submit  = new Issues(),
             project = req.body,
             id      = result[0]._id + 1;
+        
+        if(project.issue_title.length == 0 ||
+           project.issue_text.length == 0 ||
+           project.created_by == 0) {
+           return res.send('Missing required fields');
+        }
         
         submit._id         = id;
         submit.project     = req.params.project;
