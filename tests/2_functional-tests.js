@@ -72,13 +72,10 @@ suite('Functional Tests', function() {
           status_text: ''
         })
         .end(function(err, res){
+         console.log('err', err, res)
           var body = res.body[0];
           assert.equal(res.status, 200);
-          assert.isAtLeast(body.issue_title.length, 1, 'String length is greater than or equal to 1');
-          assert.isAtLeast(body.issue_text.length, 1, 'String length is greater than or equal to 1');
-          assert.isAtLeast(body.created_by.length, 1, 'String length is greater than or equal to 1');
-          assert.isAtLeast(body.assigned_to.length, 0, 'String length is greater than or equal to 0');
-          assert.isAtLeast(body.status_text.length, 0, 'String length is greater than or equal to 0');
+          assert.fail();
           done();
         });         
       });
