@@ -86,10 +86,15 @@ suite('Functional Tests', function() {
        chai.request(server)
         .post('/api/issues/test')
         .send({
-          _id: 1001
+          _id: 1001,
+          issue_title: '',
+          issue_text: '',
+          created_by: '',
+          assigned_to: '',
+          status_text: ''
         })
         .end(function(err, res){
-         console.log(res)
+         console.log('res.body', res.text);
           assert.equal(res.status, 200);
           assert.equal(res.text, 'no updated field sent');
           done();
