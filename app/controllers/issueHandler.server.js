@@ -29,7 +29,7 @@ function IssueHandler () {
   };
 
 	this.submitIssue = function (req, res) {
-
+    console.log(req.body)
 		Issues
 			.find({_id: { $gte: 1000 } })
       .sort({_id: -1}) 

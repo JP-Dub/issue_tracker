@@ -29,8 +29,8 @@ suite('Functional Tests', function() {
         })
         .end(function(err, res){
           assert.equal(res.status, 200);
-          
-          //fill me in too!
+          console.log(res.body)
+          assert.isAtLeast
           
           done();
         });
