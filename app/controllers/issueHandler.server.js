@@ -29,7 +29,6 @@ function IssueHandler () {
   };
 
 	this.submitIssue = function (req, res) {
-    console.log('submit is being called')
 		Issues
 			.find({_id: { $gte: 1000 } })
       .sort({_id: -1}) 
@@ -72,7 +71,6 @@ function IssueHandler () {
 	};
 
 	this.updateIssue = function (req, res) {   
-    console.log('an update"s been called');
    let project = req.body,
        conditions = {}, 
        updates = 0;
