@@ -143,19 +143,28 @@ suite('Functional Tests', function() {
         .put('/api/issues/test')
         .send({
           _id: testObj._id,
-          issue_text: 'text field has been updated',
+          issue_text: 'Text field has been updated',
           assigned_to: 'Functional Test - Multiple fields to update',
+          status_text: 'Multiple fields have been updated'
         })
         .end(function(err, res){
           assert.equal(res.status, 200);
           // confirmation of update
           assert.equal(res.text, 'successfully updated ' + testObj._id);
+          assert.equal(
           // validates previous field value
           assert.equal(testObj.issue_title, 'Title');
           // validates current field value after update
           searchIssues({_id: testObj._id}, function(current) {
-            assert.equal(current.issue_title, 'One field to update');            
+            assert.equal(current.issue_text, 'Text field has been updated');
+            assert.equal(current.assigned_to, 'Functional Test - Multiple fields to update');
+            assert.equal(current.status_text, 'Multiple fields have been updated');
           });
+                  
+          issue_text: 'text',
+       
+          assigned_to: 'Chai and Mocha',
+          status_text: 'In QA'
          
           done();
         });          
