@@ -219,7 +219,7 @@ suite('Functional Tests', function() {
       test('Multiple filters (test for multiple fields you know will be in the db for a return)', function(done) {
         chai.request(server)
         .get('/api/issues/test')
-        .query({open: false})
+        .query({open: false, created_by: testObj.status_text})
         .end(function(err, res){
           assert.equal(res.status, 200);
           assert.isArray(res.body);
@@ -241,7 +241,17 @@ suite('Functional Tests', function() {
     suite('DELETE /api/issues/{project} => text', function() {
       
       test('No _id', function(done) {
-        
+       chai.request(server)
+        .delete('/api/issues/test')
+        .send({
+          _id: 1000
+        })
+        .end(function(err, res){
+          console.log(res.body)
+          assert.equal(res.status, 200);
+          assert.property(res.body, { failed: 'could not delete 1000' });  
+          done();
+        });         
       });
       
       test('Valid _id', function(done) {
