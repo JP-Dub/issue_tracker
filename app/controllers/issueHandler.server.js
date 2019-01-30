@@ -8,12 +8,11 @@ function IssueHandler () {
   this.viewIssue = (req, res) => {
     var project = req.params['project'] !== '{}' ? req.params: {},
         query   = req.query;
-    console.log(query)
+   
     // add regex and options to query
     for(var key in query) {
       var val = query[key];
-      val && key !== 'open' || 
-             key !== '_id' ? query[key] = { $regex: val, $options: 'i, m'} 
+      val && key !== 'open' && key !== '_id' ? query[key] = { $regex: val, $options: 'i, m'} 
                             : query[key] = val;      
     }
     console.log(project, query)
