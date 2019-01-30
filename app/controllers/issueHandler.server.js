@@ -73,14 +73,22 @@ function IssueHandler () {
 
 	this.updateIssue = function (req, res) {   
    let project = req.body,
-       conditions = {};
-    console.log(project)
+       conditions = {}, 
+       count = 0;
+    
     for(var key in project) {
       var val = project[key];
-      if(val) conditions[key] = val;  
-      conditions['updated_on'] = new Date(Date.now()).toString();
+      console.log(key, val)
+      if(key !== project._id && val) {
+        
+        conditions[key] = val;
+        count++;
+      } 
+      
       //if(!conditions.hasOwnProperty(key)) return res.send('No body'); 
     }    
+     console.log(conditions, count)
+    conditions['updated_on'] = new Date(Date.now()).toString();
    
 		Issues
 			.findOneAndUpdate({ 
