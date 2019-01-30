@@ -74,22 +74,20 @@ function IssueHandler () {
 	this.updateIssue = function (req, res) {   
    let project = req.body,
        conditions = {}, 
-       count = 0;
+       updates = 0;
     
     for(var key in project) {
       var val = project[key];
-      console.log(key, val)
-      if(key !== project._id && val) {
-        
+    
+      if(key !== '_id' && val) {     
         conditions[key] = val;
-        count++;
-      } 
-      
-      //if(!conditions.hasOwnProperty(key)) return res.send('No body'); 
+        updates++;
+      }  
     }    
-     console.log(conditions, count)
-    conditions['updated_on'] = new Date(Date.now()).toString();
-   
+    
+    !updates ? res.send('no update field sent') : 
+               conditions['updated_on'] = new Date(Date.now()).toString();
+   console.log(conditions)
 		Issues
 			.findOneAndUpdate({ 
         _id: project._id
@@ -99,10 +97,10 @@ function IssueHandler () {
         new : true
       })
 			.exec(function (err, result) {
-          var message = { update: '' };
+          var message;
       
-					err || !result ? message['update'] = 'could not update ' + project._id 
-                         : message['update'] = 'successfully updated ' + project._id;
+					err || !result ? message = 'could not update ' + project._id 
+                         : message = 'successfully updated ' + project._id;
       
 					return res.json(message);
 				});
@@ -120,7 +118,7 @@ function IssueHandler () {
 					err || !result ? message['failed'] = 'could not delete ' + id
                          : message['success'] = 'deleted ' + id;
           
-					return res.json(message);
+					return res.send(message);
 				});
 	};
 
