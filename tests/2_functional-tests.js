@@ -84,7 +84,7 @@ suite('Functional Tests', function() {
       
       test('No body', function(done) {
        chai.request(server)
-        .post('/api/issues/test')
+        .put('/api/issues/test')
         .send({
           _id: 1001,
           issue_title: '',
@@ -103,12 +103,13 @@ suite('Functional Tests', function() {
       
       test('One field to update', function(done) {
        chai.request(server)
-        .post('/api/issues/test')
+        .put('/api/issues/test')
         .send({
           _id: 1015,
           issue_title: 'Testing title update',
         })
         .end(function(err, res){
+         console.log(res);
           assert.equal(res.status, 200);
           assert.equal(res.body[0]._id, '1015');
           assert.equal(res.body[0].issue_title, 'Testing title update');
