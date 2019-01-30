@@ -38,6 +38,7 @@ suite('Functional Tests', function() {
         })
         .end(function(err, res){
           var body = res.body[0];
+         console.log(body._id);
           assert.equal(res.status, 200);
           assert.isAtLeast(body.issue_title.length, 1, 'String length is greater than or equal to 1');
           assert.isAtLeast(body.issue_text.length, 1, 'String length is greater than or equal to 1');
@@ -103,7 +104,6 @@ suite('Functional Tests', function() {
           status_text: ''
         })
         .end(function(err, res){
-         console.log('res.body', res.text);
           assert.equal(res.status, 200);
           assert.equal(res.text, 'no updated field sent');
           done();
@@ -116,21 +116,17 @@ suite('Functional Tests', function() {
         .put('/api/issues/test')
         .send({
           _id: 1015,
-          issue_title: 'Testing title update',
+          issue_title: 'One field to update',
         })
         .end(function(err, res){
           assert.equal(res.status, 200);
           assert.equal(res.text, 'successfully updated 1015');
-          assert.equal(previous.
-          Issues.findOne({_id: 1015}).exec( (err, issue) => {
-            console.log(issue)
-           
-            if(err) throw err;
+          assert.equal(previous.issue_title, 'Title to be tested');
+          var after = searchIssues({_id: 1015});
             assert.equal(issue._id, '1015');
-            assert.equal(issue.issue_title, 'Testing title update');
+            assert.equal(issue.issue_title, 'One field to update');
           });
          
-
           done();
         });          
       });
