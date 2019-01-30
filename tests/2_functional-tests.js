@@ -89,8 +89,9 @@ suite('Functional Tests', function() {
           _id: 1001
         })
         .end(function(err, res){
+         console.log(res)
           assert.equal(res.status, 200);
-          assert.equal(res.text, 'No body');
+          assert.equal(res.text, 'no updated field sent');
           done();
         });          
       });

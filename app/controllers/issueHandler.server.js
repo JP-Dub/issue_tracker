@@ -88,7 +88,7 @@ function IssueHandler () {
     if(updates) {
       conditions['updated_on'] = new Date(Date.now()).toString();
     } else {
-       return res.send('no update field sent') ;
+       return res.send('no updated field sent') ;
     }
 
 		Issues
