@@ -111,6 +111,7 @@ suite('Functional Tests', function() {
         .end(function(err, res){
          console.log(res);
           assert.equal(res.status, 200);
+          assert.equal(res.text, 'successfully updated 1015');
           assert.equal(res.body[0]._id, '1015');
           assert.equal(res.body[0].issue_title, 'Testing title update');
           done();
