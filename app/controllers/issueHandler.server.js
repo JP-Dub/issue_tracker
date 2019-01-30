@@ -40,10 +40,11 @@ function IssueHandler () {
             project = req.body,
             id      = result[0]._id + 1;
         
-        if(project.issue_title.length == 0 ||
-           project.issue_text.length == 0 ||
-           project.created_by == 0) {
-           return res.send('Missing required fields');
+        if( project.issue_title.length == 0 ||
+            project.issue_text.length == 0 ||
+            project.created_by == 0
+          ) {
+            return res.send('Missing required fields');
         }
         
         submit._id         = id;
@@ -78,6 +79,7 @@ function IssueHandler () {
       var val = project[key];
       if(val) conditions[key] = val;  
       conditions['updated_on'] = new Date(Date.now()).toString();
+      if(!conditions.hasOwnProperty(key)) return res.send('No body'); 
     }
     
     
@@ -113,8 +115,7 @@ function IssueHandler () {
                          : message['success'] = 'deleted ' + id;
           
 					return res.json(message);
-				}
-			);
+				});
 	};
 
 }

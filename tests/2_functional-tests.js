@@ -95,13 +95,27 @@ suite('Functional Tests', function() {
         })
         .end(function(err, res){
           assert.equal(res.status, 200);
-          
+          assert.equal(res.text, 'No body');
           done();
         });          
       });
       
       test('One field to update', function(done) {
-        
+       chai.request(server)
+        .post('/api/issues/test')
+        .send({
+          _id: 1001,
+          issue_title: '',
+          issue_text: '',
+          created_by: '',
+          assigned_to: '',
+          status_text: ''
+        })
+        .end(function(err, res){
+          assert.equal(res.status, 200);
+          assert.equal(res.text, 'No body');
+          done();
+        });          
       });
       
       test('Multiple fields to update', function(done) {
