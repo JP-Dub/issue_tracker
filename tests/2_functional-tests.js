@@ -12,10 +12,12 @@ var assert = chai.assert;
 var server = require('../server');
 var Issues = require('../model/issues.js');
 
-function searchIssues(data) {
-  Issues.findOne(data).exec( (err, issue) => {
+var testObj;
+
+function searchIssues(data, cb) {
+  Issues.findOne(data).exec( (err, results) => {
             if(err) throw err;
-            return issue;
+            cb(results)
           });
 }
 
@@ -37,14 +39,13 @@ suite('Functional Tests', function() {
           status_text: 'In QA'
         })
         .end(function(err, res){
-          var body = res.body[0];
-         console.log(body._id);
+          testObj = res.body[0];
           assert.equal(res.status, 200);
-          assert.isAtLeast(body.issue_title.length, 1, 'String length is greater than or equal to 1');
-          assert.isAtLeast(body.issue_text.length, 1, 'String length is greater than or equal to 1');
-          assert.isAtLeast(body.created_by.length, 1, 'String length is greater than or equal to 1');
-          assert.isAtLeast(body.assigned_to.length, 1, 'String length is greater than or equal to 1');
-          assert.isAtLeast(body.status_text.length, 1, 'String length is greater than or equal to 1');
+          assert.isAtLeast(testObj.issue_title.length, 1, 'String length is greater than or equal to 1');
+          assert.isAtLeast(testObj.issue_text.length, 1, 'String length is greater than or equal to 1');
+          assert.isAtLeast(testObj.created_by.length, 1, 'String length is greater than or equal to 1');
+          assert.isAtLeast(testObj.assigned_to.length, 1, 'String length is greater than or equal to 1');
+          assert.isAtLeast(testObj.status_text.length, 1, 'String length is greater than or equal to 1');
           done();
         });
       });
@@ -96,7 +97,7 @@ suite('Functional Tests', function() {
        chai.request(server)
         .put('/api/issues/test')
         .send({
-          _id: 1001,
+          _id: testObj._id,
           issue_title: '',
           issue_text: '',
           created_by: '',
@@ -111,20 +112,23 @@ suite('Functional Tests', function() {
       });
       
       test('One field to update', function(done) {
-       var previous = searchIssues({_id: 1015});
+       //var previous = searchIssues({_id: 1015});
        chai.request(server)
         .put('/api/issues/test')
         .send({
-          _id: 1015,
+          _id: testObj._id,
           issue_title: 'One field to update',
         })
         .end(function(err, res){
           assert.equal(res.status, 200);
           assert.equal(res.text, 'successfully updated 1015');
-          assert.equal(previous.issue_title, 'Title to be tested');
-          var after = searchIssues({_id: 1015});
-            assert.equal(issue._id, '1015');
-            assert.equal(issue.issue_title, 'One field to update');
+          assert.equal(testObj.issue_title, 'Title to be tested');
+          
+          searchIssues({_id: testObj._id}, function(current) {
+            assert.equal(current._id, '1015');
+            assert.equal(current.issue_title, 'One field to update');            
+          });
+
           });
          
           done();
