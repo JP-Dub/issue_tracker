@@ -86,6 +86,7 @@ suite('Functional Tests', function() {
        chai.request(server)
         .post('/api/issues/test')
         .send({
+          _id: 1001,
           issue_title: '',
           issue_text: '',
           created_by: '',

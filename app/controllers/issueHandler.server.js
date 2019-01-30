@@ -79,6 +79,8 @@ function IssueHandler () {
       if(val) conditions[key] = val;  
       conditions['updated_on'] = new Date(Date.now()).toString();
     }
+    
+    
    
 		Issues
 			.findOneAndUpdate({ 
