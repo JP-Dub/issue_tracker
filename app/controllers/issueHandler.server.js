@@ -4,7 +4,6 @@ var Issues = require('../model/issues.js');
 
 function IssueHandler () {
   
-  
   this.viewIssue = (req, res) => {
     var project = req.params['project'] !== '{}' ? req.params: {},
         query   = req.query;
@@ -12,8 +11,9 @@ function IssueHandler () {
     // add regex and options to query
     for(var key in query) {
       var val = query[key];
-      val && key !== 'open' && key !== '_id' ? query[key] = { $regex: val, $options: 'i, m'} 
-                            : query[key] = val;      
+      val && key !== 'open' 
+          && key !== '_id' ? query[key] = { $regex: val, $options: 'i, m'} 
+                           : query[key] = val;      
     }
     
     Issues 

@@ -13,6 +13,7 @@ var server = require('../server');
 var path = process.cwd();
 var Issues = require(path + '/app/model/issues.js');
 
+// store a copy of the created (issue) object for tests purposes
 var testObj;
 
 
@@ -22,8 +23,7 @@ chai.use(chaiHttp);
 
 suite('Functional Tests', function() {
   
-    function searchIssues(data, cb) {
-      
+    function searchIssues(data, cb) {    
       Issues.findOne(data).exec( (err, results) => {
                 if(err) throw err;
                 cb(results)
