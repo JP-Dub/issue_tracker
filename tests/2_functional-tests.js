@@ -11,6 +11,15 @@ var chai = require('chai');
 var assert = chai.assert;
 var server = require('../server');
 var Issues = require('../model/issues.js');
+
+function searchIssues(data) {
+  Issues.findOne(data).exec( (err, issue) => {
+            if(err) throw err;
+            return issue;
+          });
+}
+
+
 chai.use(chaiHttp);
 
 suite('Functional Tests', function() {
@@ -102,6 +111,7 @@ suite('Functional Tests', function() {
       });
       
       test('One field to update', function(done) {
+       var previous = searchIssues({_id: 1015});
        chai.request(server)
         .put('/api/issues/test')
         .send({
@@ -109,12 +119,18 @@ suite('Functional Tests', function() {
           issue_title: 'Testing title update',
         })
         .end(function(err, res){
-         console.log(res);
           assert.equal(res.status, 200);
-         Issues.findOne({_id: 1015}).exec
           assert.equal(res.text, 'successfully updated 1015');
-          assert.equal(res.body[0]._id, '1015');
-          assert.equal(res.body[0].issue_title, 'Testing title update');
+          assert.equal(previous.
+          Issues.findOne({_id: 1015}).exec( (err, issue) => {
+            console.log(issue)
+           
+            if(err) throw err;
+            assert.equal(issue._id, '1015');
+            assert.equal(issue.issue_title, 'Testing title update');
+          });
+         
+
           done();
         });          
       });
