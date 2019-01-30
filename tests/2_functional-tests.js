@@ -23,7 +23,7 @@ chai.use(chaiHttp);
 suite('Functional Tests', function() {
   
     function searchIssues(data, cb) {
-      console.log(data)
+      
       Issues.findOne(data).exec( (err, results) => {
                 if(err) throw err;
         console.log(results)
@@ -124,15 +124,14 @@ suite('Functional Tests', function() {
           issue_title: 'One field to update',
         })
         .end(function(err, res){
-         console.log(testObj._id)
           assert.equal(res.status, 200);
-          // assert.equal(res.text, 'successfully updated 1015');
-          // assert.equal(testObj.issue_title, 'Title');
-          
+          // confirmation of update
+          assert.equal(res.text, 'successfully updated ' + testObj._id);
+          // validates previous field value
+          assert.equal(testObj.issue_title, 'Title');
+          // validates current field value after update
           searchIssues({_id: testObj._id}, function(current) {
-            console.log(current)
             assert.equal(current.issue_title, 'One field to update');            
-
           });
          
           done();
