@@ -15,7 +15,7 @@ function IssueHandler () {
       val && key !== 'open' && key !== '_id' ? query[key] = { $regex: val, $options: 'i, m'} 
                             : query[key] = val;      
     }
-    console.log(project, query)
+    
     Issues 
       .find(project)
       .or([query])
