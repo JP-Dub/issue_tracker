@@ -10,7 +10,7 @@ var chaiHttp = require('chai-http');
 var chai = require('chai');
 var assert = chai.assert;
 var server = require('../server');
-
+var Issues = require('../model/issues.js');
 chai.use(chaiHttp);
 
 suite('Functional Tests', function() {
@@ -111,6 +111,7 @@ suite('Functional Tests', function() {
         .end(function(err, res){
          console.log(res);
           assert.equal(res.status, 200);
+         Issues.findOne({_id: 1015}).exec
           assert.equal(res.text, 'successfully updated 1015');
           assert.equal(res.body[0]._id, '1015');
           assert.equal(res.body[0].issue_title, 'Testing title update');
